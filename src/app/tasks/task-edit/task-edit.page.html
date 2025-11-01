@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tasks" text="Volver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ task.client_id ? 'Editar Tarea' : 'Nueva Tarea' }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (ngSubmit)="saveTask()" class="task-form">
+
+    <!-- Título -->
+    <ion-item class="form-item">
+      <ion-label position="floating">Título</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="task.title"
+        name="title"
+        required
+        maxlength="60"
+        clearInput
+      ></ion-input>
+    </ion-item>
+
+    <!-- Descripción -->
+    <ion-item class="form-item">
+      <ion-label position="floating">Descripción</ion-label>
+      <ion-textarea
+        rows="4"
+        [(ngModel)]="task.description"
+        name="description"
+        maxlength="200"
+        autoGrow="true"
+      ></ion-textarea>
+    </ion-item>
+
+    <!-- Estado completado -->
+    <ion-item lines="none" class="form-item">
+      <ion-label>Completada</ion-label>
+      <ion-checkbox
+        slot="end"
+        [(ngModel)]="task.completed"
+        name="completed"
+        color="success"
+      ></ion-checkbox>
+    </ion-item>
+
+    <!-- Botones de acción -->
+    <div class="form-actions">
+      <ion-button
+        expand="block"
+        color="success"
+        type="submit"
+        [disabled]="!task.title.trim()"
+        shape="round"
+      >
+        <ion-icon name="save-outline" slot="start"></ion-icon>
+        Guardar Tarea
+      </ion-button>
+      <ion-button
+        expand="block"
+        color="medium"
+        routerLink="/tasks"
+        fill="outline"
+        shape="round"
+        class="ion-margin-top"
+      >
+        <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+        Volver
+      </ion-button>
+    </div>
+
+  </form>
+</ion-content>

@@ -1,0 +1,72 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Mis Tareas</ion-title>
+    <div class="status-indicator" slot="start">
+      <ion-icon [name]="isApiAvailable ? 'server-outline' : 'alert-circle-outline'" [color]="isApiAvailable ? 'success' : 'danger'" style="margin-left:8px;"></ion-icon>
+      <span class="status-text" [ngClass]="isApiAvailable ? 'online' : 'offline'">
+        {{ isApiAvailable ? 'API OK' : 'API Error' }}
+      </span>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/tasks/new']" shape="round" fill="solid" color="secondary" size="small" style="margin-right: 4px;">
+        <ion-icon name="add" slot="icon-only" style="font-size: 1.5em;"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="loadTasks($event)">
+    <ion-refresher-content
+      pullingText="Desliza para refrescar"
+      refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="tasks.length > 0; else emptyState" lines="none">
+    <ion-item *ngFor="let task of tasks" class="task-card" detail="false">
+      <ion-checkbox
+        slot="start"
+        [checked]="task.completed"
+        (ionChange)="toggleCompleted(task)"
+        color="success"
+        style="margin-right: 12px;">
+      </ion-checkbox>
+
+      <ion-label [ngClass]="{'completed': task.completed}">
+        <h2 class="task-title">{{ task.title }}</h2>
+        <p class="task-desc">{{ task.description }}</p>
+      </ion-label>
+
+      <ion-button
+        fill="clear"
+        color="secondary"
+        [routerLink]="['/tasks/edit', task.client_id]"
+        slot="end"
+        shape="round"
+        style="margin-left: 8px;">
+        <ion-icon name="create-outline" style="font-size: 1.7em;"></ion-icon>
+      </ion-button>
+
+      <ion-button
+        fill="clear"
+        color="danger"
+        (click)="confirmDelete(task.client_id)"
+        slot="end"
+        shape="round"
+        style="margin-left: 8px;">
+        <ion-icon name="trash-outline" style="font-size: 1.7em;"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <ion-icon name="checkmark-done-outline" color="medium" style="font-size: 3em;"></ion-icon>
+      <p class="ion-text-center ion-padding">No hay tareas creadas aún.</p>
+      <ion-button [routerLink]="['/tasks/new']" expand="block" color="primary" shape="round">
+        Crear mi primera tarea
+      </ion-button>
+    </div>
+  </ng-template>
+</ion-content>

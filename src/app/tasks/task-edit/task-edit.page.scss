@@ -1,0 +1,41 @@
+ion-content {
+  background: #f7f8fa !important;
+}
+
+.task-form {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.form-item {
+  border-radius: 14px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+  background: #fff;
+}
+
+.form-actions {
+  margin-top: 24px;
+}
+
+ion-label {
+  font-weight: 500;
+  color: #333;
+}
+
+ion-input,
+ion-textarea {
+  font-size: 1.08em;
+  color: #222;
+}
+
+ion-button {
+  font-size: 1.1em;
+  letter-spacing: 0.5px;
+}
+
+ion-checkbox {
+  --background: #e0e0e0;
+  --border-radius: 50%;
+  --size: 22px;
+}
